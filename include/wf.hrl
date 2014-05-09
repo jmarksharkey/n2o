@@ -54,18 +54,18 @@
 -record(em, {?ELEMENT_BASE(element_em)}).
 -record(small, {?ELEMENT_BASE(element_small)}).
 -record(value, {?ELEMENT_BASE(element_value)}).
--record(link, {?ELEMENT_BASE(element_link), title = "", new=false, mobile_target=false, mobile_dialog=false, url="javascript:", postback, delegate, name}).
+-record(link, {?ELEMENT_BASE(element_link), title = "", new, mobile_target=false, mobile_dialog=false, url="javascript:", postback, delegate, name}).
 -record(email_link, {?ELEMENT_BASE(element_email_link), title="", email=""}).
 -record(error, {?ELEMENT_BASE(element_error)}).
 -record(span, {?ELEMENT_BASE(element_span)}).
 -record(button, {?ELEMENT_BASE(element_button), click, postback, delegate}).
 -record(literal, {?ELEMENT_BASE(element_literal)}).
--record(textbox, {?ELEMENT_BASE(element_textbox), value, maxlength="", placeholder="", next, postback, delegate, html_name}).
+-record(textbox, {?ELEMENT_BASE(element_textbox), type=text, value, maxlength="", placeholder="", next, postback, delegate, html_name}).
 -record(hidden, {?ELEMENT_BASE(element_hidden), value, html_name, disabled=false}).
 -record(textarea, {?ELEMENT_BASE(element_textarea), placeholder="", html_name}).
 -record(range, {?ELEMENT_BASE(element_range), min=0, max=100, step=1, value=0, next, postback, delegate}).
 -record(datepicker_textbox, {?ELEMENT_BASE(element_datepicker_textbox), value, next, validators=[], options = [{dateFormat, "yy-mm-dd"}] }).
--record(dropdown, {?ELEMENT_BASE(element_dropdown), options=[], postback, delegate, value, multiple=false, disabled=false, html_name}).
+-record(dropdown, {?ELEMENT_BASE(element_dropdown), options, postback, delegate, value, multiple=false, disabled=false, html_name}).
 -record(option, {body, value=undefined, selected=false, show_if=true }).
 -record(checkbox, {?ELEMENT_BASE(element_checkbox), checked=false, value="on", postback, delegate, html_name}).
 -record(radiogroup, {?ELEMENT_BASE(element_radiogroup)}).

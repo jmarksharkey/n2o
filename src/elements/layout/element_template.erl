@@ -17,10 +17,10 @@ get_cached_template(File) ->
     FileAtom = list_to_atom("template_file_" ++ File),
 
     LastModAtom = list_to_atom("template_lastmod_" ++ File),
-    LastMod = nitro_mochiglobal:get(LastModAtom),
+    LastMod = mochiglobal:get(LastModAtom),
 
     CacheTimeAtom = list_to_atom("template_cachetime_" ++ File),
-    CacheTime = nitro_mochiglobal:get(CacheTimeAtom),
+    CacheTime = mochiglobal:get(CacheTimeAtom),
 
     %% Check for recache if one second has passed since last cache time...
     ReCache = case (CacheTime == undefined) orelse (timer:now_diff(now(), CacheTime) > (1000 * 1000)) of
@@ -31,36 +31,39 @@ get_cached_template(File) ->
                 true ->
                     true;
                 false ->
-                    nitro_mochiglobal:put(CacheTimeAtom, now()),
+                    mochiglobal:put(CacheTimeAtom, now()),
                     false
             end;
         false ->
             false
     end,
 
+
     case ReCache of
         true ->
             %% Recache the template...
             Template = parse_template(File),
-            nitro_mochiglobal:put(FileAtom, Template),
-            nitro_mochiglobal:put(LastModAtom, filelib:last_modified(File)),
-            nitro_mochiglobal:put(CacheTimeAtom, now()),
+            mochiglobal:put(FileAtom, Template),
+            mochiglobal:put(LastModAtom, filelib:last_modified(File)),
+            mochiglobal:put(CacheTimeAtom, now()),
             Template;
         false ->
             %% Load template from cache...
             Template = parse_template(File),
-            nitro_mochiglobal:put(FileAtom, Template),
-            nitro_mochiglobal:put(LastModAtom, filelib:last_modified(File)),
-            nitro_mochiglobal:put(CacheTimeAtom, now()),
+            mochiglobal:put(FileAtom, Template),
+            mochiglobal:put(LastModAtom, filelib:last_modified(File)),
+            mochiglobal:put(CacheTimeAtom, now()),
             Template 
             % ;
-            %nitro_mochiglobal:get(FileAtom)
+            %mochiglobal:get(FileAtom)
     end.
 
 parse_template(File) ->
     % TODO - Templateroot
-    % File1 = filename:join(nitrogen:get_templateroot(), File),
-    File1 = File,
+    File1 = filename:join(code:priv_dir(web), File),
+    %File1 = File,
+
+    %io:format("template file is :~s", [File1]),
     case file:read_file(File1) of
         {ok, B} -> parse_template1(B);
         _ ->

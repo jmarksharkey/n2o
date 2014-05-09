@@ -27,9 +27,11 @@ init_context(Req) ->
         params=[],
         session=undefined,
         handlers= [ {'query', handler_coalecse('query', n2o_query_handler)},
+                    {site,   handler_coalecse(site, g10_site_handler)},
                     {session, handler_coalecse(session, n2o_session_handler)},
                     {route,   handler_coalecse(route, n2o_route_handler)} ]}.
 
-handler_coalecse(Key, Default) -> case application:get_env(n2o,Key) of
+handler_coalecse(Key, Default) ->
+  case application:get_env(n2o,Key) of
                               undefined -> Default;
                               {ok,V} -> V end.

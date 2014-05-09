@@ -16,5 +16,5 @@ render_element(Record) ->
         {<<"class">>, Record#hidden.class},
         {<<"type">>, <<"hidden">>},
         {<<"name">>, Record#hidden.html_name},
-        {<<"value">>, Record#hidden.value}
+        {<<"value">>, Record#hidden.value} | Record#hidden.data_fields
     ]).
